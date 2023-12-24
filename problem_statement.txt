@@ -1,0 +1,23 @@
+Challenge: https://codingchallenges.fyi/challenges/challenge-url-shortener/
+
+Requirements:
+
+-> An API POST Request will be made in which a long_url input will be given and in return we will mapped
+this long_url with short_url and return it back to the client.
+
+-> Long URL ----> mapped to -----> Short URL
+
+-> Response
+{
+    "key":"wsf5f",
+    "long_url":"https://www.google.com",
+    "short_url":"http://localhost/wsf5f"
+}
+
+-> Few Key-notes to keep in mind,
+1.) When the URL already exists you can return the same status code and existing shortened version of the 
+    URL. In other words the API call to create a shortened URL should be idempotent.
+
+2.) Add a check to ensure that a duplicate key that is generated from a different long URL is handled. One 
+    option might be to add a unique value to the hash input and re-hash.
+
