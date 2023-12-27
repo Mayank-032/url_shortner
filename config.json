@@ -1,0 +1,5 @@
+{
+    "environment": "development",
+    "port": "8000",
+    "short_url_base_path": "https://shorturl"
+}
