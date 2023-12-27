@@ -6,6 +6,6 @@ import (
 )
 
 type URLInteractor interface {
-	ShortURLMapper(ctx context.Context, url domain.URL) (domain.URL, error)
-	FetchLongURL(ctx context.Context, url domain.URL) (domain.URL, error)
+	SaveURL(ctx context.Context, url domain.URL) (domain.URL, error)
+	FetchURL(ctx context.Context, url domain.URL) (domain.URL, error)
 }
