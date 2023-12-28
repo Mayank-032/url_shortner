@@ -10,18 +10,18 @@ import (
 var Configuration Config
 
 type Config struct {
-	Environment      string        `json:"environment"`
-	Port             string        `json:"port"`
-	Database         MySQLDatabase `json:"database"`
-	ShortURLBasePath string        `json:"short_url_base_path"`
+	Environment string        `mapstructure:"environment"`
+	Port        string        `mapstructure:"port"`
+	Database    MySQLDatabase `mapstructure:"database"`
+	BasePath    string        `mapstructure:"base_path"`
 }
 
 type MySQLDatabase struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Host     string `json:"host"`
-	Port     string `json:"port"`
-	Schema   string `json:"schema"`
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
+	Host     string `mapstructure:"host"`
+	Port     string `mapstructure:"port"`
+	Schema   string `mapstructure:"schema"`
 }
 
 func LoadConfig() error {

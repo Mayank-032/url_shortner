@@ -36,6 +36,7 @@ func InitMySQL() error {
 		return errors.New("unable to ping db...")
 	}
 
+	DB = db
 	log.Println("successfuly connected with database")
 	return nil
 }

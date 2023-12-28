@@ -64,7 +64,8 @@ func (uc URLController) ShortURL(w http.ResponseWriter, r *http.Request) {
 	}
 
 	request.Key = hashedKey
-	request.ShortURL = fmt.Sprintf("%v/%v", config.Configuration.ShortURLBasePath, hashedKey)
+	fmt.Println("shortBasePath: " + config.Configuration.BasePath)
+	request.ShortURL = fmt.Sprintf("%v/%v", config.Configuration.BasePath, hashedKey)
 	request.IsKeySigned = isHashSigned
 
 	err = uc.URLInteractor.SaveURL(r.Context(), request)

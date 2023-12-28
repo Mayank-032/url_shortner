@@ -33,10 +33,10 @@ func (ur UrlRepo) Fetch(ctx context.Context, url domain.URL) (domain.URL, error)
 
 	sqlQuery := `
 		SELECT 
-			long_url,
+			long_url
 		FROM url_mapper
 		WHERE
-			hash = ? and isHashSigned = ?
+			hash = ? and is_hash_signed = ?
 	`
 
 	var longURL string

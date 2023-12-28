@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"short-url/config"
+	"short-url/database"
 	"short-url/routes"
 )
 
@@ -15,11 +16,11 @@ func main() {
 		return
 	}
 
-	// err = database.InitMySQL()
-	// if err != nil {
-	// 	log.Fatalf("Error: %v\n. unable to connect to db", err.Error())
-	// 	return
-	// }
+	err = database.InitMySQL()
+	if err != nil {
+		log.Fatalf("Error: %v\n. unable to connect to db", err.Error())
+		return
+	}
 
 	r := http.NewServeMux()
 	routes.InitRoutes(r)

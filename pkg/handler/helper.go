@@ -57,12 +57,12 @@ func validateRedirectURLRequest(r *http.Request) (domain.URL, error) {
 		return domain.URL{}, errors.New("unable to unmarshal request")
 	}
 
-	if len(urlReq.Key) == 0 || len(urlReq.ShortURL) == 0 {
+	if len(urlReq.Key) == 0 {
 		return domain.URL{}, errors.New("invalid_request")
 	}
 
 	return domain.URL{
-		ShortURL: urlReq.ShortURL,
-		Key:      urlReq.Key,
+		IsKeySigned: urlReq.IsKeySigned,
+		Key:         urlReq.Key,
 	}, nil
 }
