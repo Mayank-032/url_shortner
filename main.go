@@ -22,6 +22,12 @@ func main() {
 		return
 	}
 
+	err = database.InitRedis()
+	if err != nil {
+		log.Fatalf("Error: %v\n. unable to connect to db", err.Error())
+		return
+	}
+
 	r := http.NewServeMux()
 	routes.InitRoutes(r)
 

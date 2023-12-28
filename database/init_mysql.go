@@ -3,7 +3,6 @@ package database
 import (
 	"context"
 	"database/sql"
-	"errors"
 	"fmt"
 	"log"
 	"short-url/config"
@@ -20,7 +19,7 @@ func InitMySQL() error {
 	db, err := sql.Open("mysql", connectionString)
 	if err != nil {
 		log.Println("Error: " + err.Error())
-		return errors.New("unable to open db conn")
+		return err
 	}
 
 	db.SetMaxOpenConns(20)
@@ -33,7 +32,7 @@ func InitMySQL() error {
 	err = db.PingContext(ctx)
 	if err != nil {
 		log.Println("Error: " + err.Error())
-		return errors.New("unable to ping db...")
+		return err
 	}
 
 	DB = db

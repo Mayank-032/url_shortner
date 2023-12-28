@@ -10,13 +10,14 @@ import (
 var Configuration Config
 
 type Config struct {
-	Environment string        `mapstructure:"environment"`
-	Port        string        `mapstructure:"port"`
-	Database    MySQLDatabase `mapstructure:"database"`
-	BasePath    string        `mapstructure:"base_path"`
+	Environment string   `mapstructure:"environment"`
+	Port        string   `mapstructure:"port"`
+	Database    Database `mapstructure:"database"`
+	BasePath    string   `mapstructure:"base_path"`
+	Redis       Database `mapstructure:"redis"`
 }
 
-type MySQLDatabase struct {
+type Database struct {
 	Username string `mapstructure:"username"`
 	Password string `mapstructure:"password"`
 	Host     string `mapstructure:"host"`
