@@ -1,9 +1,14 @@
 package utils
 
-import "net/http"
+import (
+	"encoding/json"
+	"net/http"
+)
 
-func ReturnJsonResponse(res http.ResponseWriter, httpCode int, resMessage []byte) {
+func ReturnJsonResponse(res http.ResponseWriter, httpCode int, msg map[string]interface{}) {
 	res.Header().Set("Content-type", "application/json")
 	res.WriteHeader(httpCode)
-	res.Write(resMessage)
+
+	msgBytes, _ := json.Marshal(msg)
+	res.Write(msgBytes)
 }

@@ -12,13 +12,13 @@ type URLInteractor struct {
 	URL repository.URL
 }
 
-func (ui URLInteractor) SaveURL(ctx context.Context, url domain.URL) (domain.URL, error) {
+func (ui URLInteractor) SaveURL(ctx context.Context, url domain.URL) error {
 	err := ui.URL.Save(ctx, url)
 	if err != nil {
 		log.Printf("Error: %v\n", err.Error())
-		return domain.URL{}, errors.New("unable to save url")
+		return errors.New("unable to save url")
 	}
-	return domain.URL{}, nil
+	return nil
 }
 
 func (ui URLInteractor) FetchURL(ctx context.Context, url domain.URL) (domain.URL, error) {

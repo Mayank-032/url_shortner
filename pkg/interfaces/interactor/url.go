@@ -6,6 +6,6 @@ import (
 )
 
 type URLInteractor interface {
-	SaveURL(ctx context.Context, url domain.URL) (domain.URL, error)
+	SaveURL(ctx context.Context, url domain.URL) error
 	FetchURL(ctx context.Context, url domain.URL) (domain.URL, error)
 }
