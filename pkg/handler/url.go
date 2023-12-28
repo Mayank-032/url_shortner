@@ -54,23 +54,16 @@ func (uc URLController) ShortURL(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hashedKey, isHashSigned, err := uc.HashInteractor.HashFunction(r.Context(), request.LongURL)
-	if err != nil {
-		log.Printf("Error: %v\n", err.Error())
-
-		handlerMsg["message"] = "oops, something went wrong. please try again"
-		utils.ReturnJsonResponse(w, http.StatusInternalServerError, handlerMsg)
-		return
-	}
-
-	request.Key = hashedKey
-	fmt.Println("shortBasePath: " + config.Configuration.BasePath)
-	request.ShortURL = fmt.Sprintf("%v/%v", config.Configuration.BasePath, hashedKey)
-	request.IsKeySigned = isHashSigned
+	request.Key, request.IsKeySigned = uc.HashInteractor.HashFunction(r.Context(), request.LongURL)
+	request.ShortURL = fmt.Sprintf("%v/%v", config.Configuration.BasePath, request.IsKeySigned)
 
 	err = uc.URLInteractor.SaveURL(r.Context(), request)
 	if err != nil {
 		log.Printf("Error: %v\n", err.Error())
+
+		if err.Error() == "duplicate_request" {
+			handlerMsg["message"] = "url already exists"
+		}
 
 		handlerMsg["message"] = "oops, something went wrong. please try again"
 		utils.ReturnJsonResponse(w, http.StatusInternalServerError, handlerMsg)
@@ -80,7 +73,7 @@ func (uc URLController) ShortURL(w http.ResponseWriter, r *http.Request) {
 	response := response.ShortURL{
 		ShortURL:    request.ShortURL,
 		Key:         request.Key,
-		IsKeySigned: isHashSigned,
+		IsKeySigned: request.IsKeySigned,
 	}
 
 	handlerMsg["status"] = true
@@ -116,6 +109,12 @@ func (uc URLController) RedirectUser(w http.ResponseWriter, r *http.Request) {
 	redirectUserResponse, err := uc.URLInteractor.FetchURL(r.Context(), request)
 	if err != nil {
 		log.Printf("Error: %v\n", err.Error())
+
+		if err.Error() == "invalid_hash" {
+			handlerMsg["message"] = "invalid hash, or signed_key value provided. please provide correct data"
+			utils.ReturnJsonResponse(w, http.StatusInternalServerError, handlerMsg)
+			return
+		}
 
 		handlerMsg["message"] = "oops, something went wrong. please try again"
 		utils.ReturnJsonResponse(w, http.StatusInternalServerError, handlerMsg)

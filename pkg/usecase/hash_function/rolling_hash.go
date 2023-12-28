@@ -12,7 +12,7 @@ type RollingHash struct {
 // hash[input_str] = s[0] + s[1]*p + s[2]*p*p + s[3]*p*p*p + ... + s[n]*p*p*p*..*p(n-times) % m
 // p = nearest prime number (greater-one) to total distinct characters, an input string can have
 // m = required for modulo to reduce number of collisions
-func (rh RollingHash) HashFunction(ctx context.Context, inputToHash string) (string, bool, error) {
+func (rh RollingHash) HashFunction(ctx context.Context, inputToHash string) (string, bool) {
 	var (
 		p             = domain.NearestPrimeToTotalDistinctAlphabet
 		m             = domain.Modulo
@@ -46,5 +46,5 @@ func (rh RollingHash) HashFunction(ctx context.Context, inputToHash string) (str
 		hashValue = -1 * hashValue
 		isSignedHashValue = true
 	}
-	return fmt.Sprintf("%v", hashValue), isSignedHashValue, nil
+	return fmt.Sprintf("%v", hashValue), isSignedHashValue
 }

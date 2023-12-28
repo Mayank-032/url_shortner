@@ -16,6 +16,11 @@ func (ui URLInteractor) SaveURL(ctx context.Context, url domain.URL) error {
 	err := ui.URL.Save(ctx, url)
 	if err != nil {
 		log.Printf("Error: %v\n", err.Error())
+
+		if err.Error() == "duplicate_request" {
+			return err
+		}
+
 		return errors.New("unable to save url")
 	}
 	return nil
@@ -25,6 +30,11 @@ func (ui URLInteractor) FetchURL(ctx context.Context, url domain.URL) (domain.UR
 	urlBody, err := ui.URL.Fetch(ctx, url)
 	if err != nil {
 		log.Printf("Error: %v\n", err.Error())
+
+		if err.Error() == "invalid_hash" {
+			return domain.URL{}, err
+		}
+
 		return domain.URL{}, errors.New("unable to fetch url")
 	}
 	return urlBody, nil
