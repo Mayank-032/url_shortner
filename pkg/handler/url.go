@@ -13,6 +13,8 @@ import (
 	"short-url/pkg/usecase"
 	hashFunctionInteractor "short-url/pkg/usecase/hash_function"
 	"short-url/pkg/utils"
+
+	"github.com/redis/go-redis/v9"
 )
 
 type URLController struct {
@@ -20,11 +22,12 @@ type URLController struct {
 	HashInteractor interfaces.HashInteractor
 }
 
-func NewURLController(db *sql.DB) URLController {
+func NewURLController(db *sql.DB, client *redis.Client) URLController {
 	return URLController{
 		URLInteractor: usecase.URLInteractor{
 			URL: repository.UrlRepo{
-				DB: db,
+				DB:          db,
+				RedisClient: client,
 			},
 		},
 		HashInteractor: hashFunctionInteractor.RollingHash{},
