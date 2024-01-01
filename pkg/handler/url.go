@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"short-url/config"
+	"short-url/infrastructure/config"
 	"short-url/pkg/dto/response"
 	"short-url/pkg/interfaces"
 	"short-url/pkg/interfaces/interactor"

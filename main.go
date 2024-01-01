@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"short-url/config"
-	"short-url/database"
-	"short-url/routes"
+	"short-url/infrastructure/config"
+	"short-url/infrastructure/database"
+	"short-url/infrastructure/routes"
 )
 
 func main() {
